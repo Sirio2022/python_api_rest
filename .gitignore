@@ -1,0 +1,29 @@
+# Entornos virtuales
+venv/
+.env/
+ENV/
+env/
+
+# Archivos de dependencias
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+
+# Configuración de PyCharm
+.idea/
+
+# Archivos de entorno
+*.env
+
+# Archivos de logs
+*.log
+
+# Archivos de bases de datos locales
+*.sqlite3
+
+# Archivos de configuración de sistema operativo
+.DS_Store
+
+# Archivos de configuración de uvicorn (si tienes)
+*.pid
