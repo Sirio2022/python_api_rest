@@ -1,7 +1,7 @@
 [project]
 name = "backend"
 version = "0.1.0"
-description = "Add your description here"
+description = "A Python backend application"
 requires-python = ">=3.13"
 dependencies = [
     "black>=25.1.0",
