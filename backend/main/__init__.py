@@ -23,7 +23,7 @@ def create_app():
 
     load_dotenv()
 
-    # Configure the app with environment variables for database
+    # Configure the app with environment variables for a database
     db_name = os.getenv("DB_NAME", "basecomercio.db")
     db_path = os.getenv("DB_PATH", "./")
     db_full_path = os.path.abspath(os.path.join(db_path, db_name))
@@ -37,6 +37,6 @@ def create_app():
     db.init_app(app)
     app.register_blueprint(clientes_bp)
     with app.app_context():
-        db.create_all()  # Create database tables
+        db.create_all()  # Create the database tables
 
     return app
