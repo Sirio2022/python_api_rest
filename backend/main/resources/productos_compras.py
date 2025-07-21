@@ -24,7 +24,7 @@ class ProductosCompras(Resource):
         )
         args = parser.parse_args()
 
-        new_producto_compra = ProductoCompra.from_json(args)
+        new_producto_compra = ProductoCompraModel.from_json(args)
         db.session.add(new_producto_compra)
         db.session.commit()
 
