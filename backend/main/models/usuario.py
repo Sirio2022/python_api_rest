@@ -14,6 +14,9 @@ class Usuario(db.Model):
     created_at = db.Column(
         db.DateTime, default=dt.datetime.now(timezone.utc), nullable=False
     )
+    compra = db.relationship(
+        "Compra", back_populates="usuario", cascade="all, delete-orphan"
+    )
 
     def __repr__(self):
         return f"<Usuario {self.username} {self.role}>"
