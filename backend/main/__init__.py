@@ -29,6 +29,12 @@ def create_app():
         ClienteResource,
         UsuariosResource,
         UsuarioResource,
+        ProductosResource,
+        ProductoDetailResource,
+        ComprasResource,
+        CompraDetailResource,
+        ProductosComprasResource,
+        ProductoCompraDetailResource,
     )
 
     clientes_bp = Blueprint("clientes", __name__)
@@ -39,10 +45,28 @@ def create_app():
     usuarios_bp = Blueprint("usuarios", __name__)
     api_usuarios = Api(usuarios_bp)
     api_usuarios.add_resource(UsuariosResource, "/usuarios")
-    api_usuarios.add_resource(UsuarioResource, "/usuarios/<usuario_id>")
+    api_usuarios.add_resource(UsuarioResource, "/usuario/<usuario_id>")
+
+    productos_bp = Blueprint("productos", __name__)
+    api_productos = Api(productos_bp)
+    api_productos.add_resource(ProductosResource, "/productos")
+    api_productos.add_resource(ProductoDetailResource, "/producto/<producto_id>")
+
+    compras_bp = Blueprint("compras", __name__)
+    api_compras = Api(compras_bp)
+    api_compras.add_resource(ComprasResource, "/compras")
+    api_compras.add_resource(CompraDetailResource, "/compra/<compra_id>")
+
+    productos_compras_bp = Blueprint("productos_compras", __name__)
+    api_productos_compras = Api(productos_compras_bp)
+    api_productos_compras.add_resource(ProductosComprasResource, "/productos_compras")
+    api_productos_compras.add_resource(ProductoCompraDetailResource, "/producto_compra/<producto_compra_id>")
 
     app.register_blueprint(clientes_bp)
     app.register_blueprint(usuarios_bp)
+    app.register_blueprint(productos_bp)
+    app.register_blueprint(compras_bp)
+    app.register_blueprint(productos_compras_bp)
 
     with app.app_context():
         db.create_all()
