@@ -2,3 +2,9 @@ from .clientes import Clientes as ClientesResource
 from .clientes import Cliente as ClienteResource
 from .usuarios import Usuarios as UsuariosResource
 from .usuarios import Usuario as UsuarioResource
+from .productos import Productos as ProductosResource
+from .productos import ProductoDetail as ProductoDetailResource
+from .compras import Compras as ComprasResource
+from .compras import CompraDetail as CompraDetailResource
+from .productos_compras import ProductosCompras as ProductosComprasResource
+from .productos_compras import ProductoCompraDetail as ProductoCompraDetailResource
