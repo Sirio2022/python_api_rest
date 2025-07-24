@@ -1,5 +1,5 @@
 from flask_restful import Resource, reqparse, abort
-from flask import make_response, jsonify
+from flask import make_response, jsonify, request
 from .. import db
 from ..models import ProductoModel
 
