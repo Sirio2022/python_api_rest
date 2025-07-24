@@ -43,10 +43,22 @@ class Productos(Resource):
             ),
         )
 
+
+
+
+class ProductoDetail(Resource):
+    @staticmethod
+    def get(producto_id):
+
+        producto = ProductoModel.query.get(producto_id)
+        if not producto:
+            abort(404, message="Producto no encontrado")
+
+        return make_response(jsonify(producto.to_json()), 200)
+
     @staticmethod
     def put(producto_id):
         parser = reqparse.RequestParser()
-        parser.add_argument("id", type=int, required=True, help="ID is required")
         parser.add_argument("nombre", type=str, required=False)
         parser.add_argument("descripcion", type=str, required=False)
         parser.add_argument("imagen", type=str, required=False)
@@ -77,7 +89,6 @@ class Productos(Resource):
     @staticmethod
     def patch(producto_id):
         parser = reqparse.RequestParser()
-        parser.add_argument("id", type=int, required=True, help="ID is required")
         parser.add_argument("stock", type=int, required=True, help="Stock is required")
         args = parser.parse_args()
 
@@ -93,10 +104,6 @@ class Productos(Resource):
 
     @staticmethod
     def delete(producto_id):
-        parser = reqparse.RequestParser()
-        parser.add_argument("id", type=int, required=True, help="ID is required")
-        args = parser.parse_args()
-
         producto = ProductoModel.query.get(producto_id)
 
         if not producto:
@@ -104,26 +111,5 @@ class Productos(Resource):
 
         db.session.delete(producto)
         db.session.commit()
-        return make_response(jsonify({"message": "Producto deleted"}), 204)
+        return make_response(jsonify({"message": "Producto eliminado correctamente."}), 200)
 
-
-class ProductoDetail(Resource):
-    @staticmethod
-    def get(producto_id):
-
-        producto = ProductoModel.query.get(producto_id)
-        if not producto:
-            abort(404, message="Producto no encontrado")
-
-        return make_response(jsonify(producto.to_json()), 200)
-
-    @staticmethod
-    def delete(producto_id):
-        producto = ProductoModel.query.get(producto_id)
-
-        if not producto:
-            abort(404, message="Producto no encontrado")
-            
-        db.session.delete(producto)
-        db.session.commit()
-        return make_response(jsonify({"message": "Producto deleted"}), 204)
