@@ -1,5 +1,5 @@
 from flask_restful import Resource, reqparse, abort
-from flask import make_response, jsonify, request
+from flask import make_response, jsonify
 from .. import db
 from ..models import ProductoModel
 
@@ -37,13 +37,8 @@ class Productos(Resource):
     def get():
         productos = ProductoModel.query.all()
         return make_response(
-            jsonify({
-                "productos": [producto.to_json() for producto in productos]
-                    }
-            ),
+            jsonify({"productos": [producto.to_json() for producto in productos]}),
         )
-
-
 
 
 class ProductoDetail(Resource):
@@ -57,7 +52,7 @@ class ProductoDetail(Resource):
         return make_response(jsonify(producto.to_json()), 200)
 
     @staticmethod
-    def put(producto_id):
+    def patch(producto_id):
         parser = reqparse.RequestParser()
         parser.add_argument("nombre", type=str, required=False)
         parser.add_argument("descripcion", type=str, required=False)
@@ -67,10 +62,8 @@ class ProductoDetail(Resource):
         args = parser.parse_args()
 
         producto = ProductoModel.query.get(producto_id)
-
         if not producto:
             abort(404, message="Producto no encontrado")
-
 
         if args["nombre"] is not None:
             producto.nombre = args["nombre"]
@@ -87,23 +80,8 @@ class ProductoDetail(Resource):
         return make_response(jsonify(producto.to_json()), 200)
 
     @staticmethod
-    def patch(producto_id):
-        parser = reqparse.RequestParser()
-        parser.add_argument("stock", type=int, required=True, help="Stock is required")
-        args = parser.parse_args()
-
-        producto = ProductoModel.query.get(producto_id)
-
-        if not producto:
-            abort(404, message="Producto no encontrado")
-
-        producto.stock = args["stock"]
-
-        db.session.commit()
-        return make_response(jsonify(producto.to_json()), 200)
-
-    @staticmethod
     def delete(producto_id):
+
         producto = ProductoModel.query.get(producto_id)
 
         if not producto:
@@ -111,5 +89,6 @@ class ProductoDetail(Resource):
 
         db.session.delete(producto)
         db.session.commit()
-        return make_response(jsonify({"message": "Producto eliminado correctamente."}), 200)
-
+        return make_response(
+            jsonify({"message": "Producto eliminado correctamente."}), 200
+        )
