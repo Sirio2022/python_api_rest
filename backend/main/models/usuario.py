@@ -11,11 +11,11 @@ class Usuario(db.Model):
     email = db.Column(db.String(100), unique=True, nullable=False)
     role = db.Column(db.String(20), nullable=False, default="user")
     phone_number = db.Column(db.String(20), nullable=True)
+    compras = db.relationship(
+        "Compra", back_populates="usuario", cascade="all, delete-orphan"
+    )
     created_at = db.Column(
         db.DateTime, default=dt.datetime.now(timezone.utc), nullable=False
-    )
-    compra = db.relationship(
-        "Compra", back_populates="usuario", cascade="all, delete-orphan"
     )
 
     def __repr__(self):
